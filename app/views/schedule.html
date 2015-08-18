@@ -1,0 +1,21 @@
+<p>{{tabs}}</p>
+<p>{{schedule}}</p>
+
+<h3>{{schedule.name}}</h3>
+<div class="table-responsive">
+    <table class="table table-bordered">
+        <tr>
+            <td></td>
+            <td ng-repeat="day in schedule.days">{{day}}</td>
+        </tr>
+        <tr ng-repeat="shift in schedule.formattedShifts" ng-init="shift.index = $index">
+            <td>{{shift.startString}} to {{shift.endString}}</td>
+            <td ng-repeat="day in schedule.days">
+                <div ng-show="schedule.schedule[day][shift.index]">
+                    <p>Employees:</p>
+                    <p ng-repeat="employee in schedule.schedule[day][shift.index].employees">{{employee.name}}</p>
+                </div>
+            </td>
+        </tr>
+    </table>
+</div>
