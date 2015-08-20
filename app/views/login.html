@@ -1,0 +1,19 @@
+<form>
+    <div class="form-group">
+        <label>Username:</label>
+        <input type="text" class="form-control" ng-model="login.username"/>
+    </div>
+    <div class="form-group">
+        <label>Password:</label>
+        <input type="password" class="form-control" ng-model="login.password"/>
+    </div>
+    <div class="form-group" ng-show="login.isSigningUp">
+        <label>Retype Password:</label>
+        <input type="password" class="form-control" ng-model="login.retypePassword"/>
+    </div>
+    <div class="form-group">
+        <button class="btn btn-default" ng-show="!login.isSigningUp" ng-click="login.login()">Login</button>
+    </div>
+    <a ng-click="login.signUp()" ng-show="!login.isSigningUp">Don't have an account?</a>
+    <button class="btn btn-default" ng-show="login.isSigningUp" ng-click="login.createUser()">Sign Up</button>
+</form>

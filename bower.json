@@ -14,7 +14,11 @@
     "tests"
   ],
   "dependencies": {
-    "angular": "1.4.3",
-    "bootstrap": "3.3.5"
+    "angular": "1.4.4",
+    "bootstrap": "3.3.5",
+    "angular-cookies": "~1.4.4"
+  },
+  "resolutions": {
+    "angular": "1.4.4"
   }
 }

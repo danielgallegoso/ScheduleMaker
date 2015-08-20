@@ -6,11 +6,16 @@
     <title>Schedule Maker</title>
 </head>
 <body>
-<div class="container-fluid">
+<div class="container-fluid" ng-controller="LoginController as login">
     <nav class="navbar navbar-inverse">
-        <p class="navbar-brand">Schedule Maker</p>
+        <div class="container-fluid">
+            <p class="navbar-brand navbar-left">Schedule Maker</p>
+            <button class="btn btn-default navbar-btn pull-right btn-primary" ng-show="login.user" ng-click="login.logout()">Logout</button>
+            <p ng-show="login.user" class="navbar-text pull-right">Hello {{login.user}}! </p>
+        </div>
     </nav>
-    <div ng-controller="TabController as tabs">
+    <div ng-include="'views/login.html'" ng-show="!login.user"></div>
+    <div ng-controller="TabController as tabs" ng-show="login.user">
         <ul class="nav nav-tabs nav-justified">
             <li role="presentation" ng-repeat="tab in tabs.tabs" ng-class="{active: tabs.isActive(tab)}"
                 ng-click="tabs.clickTab(tab)"><a href="">{{tab.title}}</a></li>
@@ -21,13 +26,15 @@
     </div>
 </div>
 <script type="text/javascript" src="../bower_components/angular/angular.min.js"></script>
+<script type="text/javascript" src="../scripts/controllers/LoginController.js"></script>
+<script type="text/javascript" src="../scripts/controllers/TabController.js"></script>
+<script type="text/javascript" src="../scripts/controllers/ScheduleController.js"></script>
 <script type="text/javascript" src="../scripts/services/ScheduleManagementService.js"></script>
 <script type="text/javascript" src="../scripts/factories/ShiftFactory.js"></script>
 <script type="text/javascript" src="../scripts/factories/EmployeeFactory.js"></script>
-<script type="text/javascript" src="../scripts/controllers/ScheduleController.js"></script>
-<script type="text/javascript" src="../scripts/controllers/TabController.js"></script>
 <script type="text/javascript" src="../scripts/index.js"></script>
 <script type="text/javascript" src="../bower_components/jquery/dist/jquery.min.js"></script>
+<script type="text/javascript" src="../bower_components/angular-cookies/angular-cookies.min.js"></script>
 <script type="text/javascript" src="../bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 </body>
 </html>

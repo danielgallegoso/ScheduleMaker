@@ -2,23 +2,29 @@
  * Created by danielgallegos on 7/24/15.
  */
 var express = require('express');
-//var path = require('path');
 var bodyParser = require('body-parser');
+var LodashTemplates = require('lodash-express');
+var utils = require('./tools/utils');
+var angularRoute = require('./routes/angularRoute');
+//var productsRoute = require('./routes/productsRoute');
+
 
 var app = express();
 
-
+LodashTemplates(app, 'html');
+app.set('views', process.cwd() + '/app/views');
+app.set('view engine', 'html');
 app.use(express.static(__dirname + '/app'));
-
 app.use(bodyParser.json());
 
+//app.use('/v1/cqms', cqmsRoute.getRoutes());
+app.use('/', angularRoute.getRoutes());
 
-app.get('/', function(req, res) {
-    res.sendFile(__dirname + '/app/views/index.html');
+
+app.use(function(req, res) {
+    utils.sendError(404, '[Error] Whoops, the page you\'re looking for doesn\'t exist! :\'( ', res);
 });
 
 app.listen(8080);
 
 console.log('Listening on localhost:8080');
-
-var http = require('http');
