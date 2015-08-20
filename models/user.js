@@ -1,16 +1,14 @@
 /**
  * Created by danielgallegos on 8/19/15.
  */
-module.exports = function(mongoose, Schema) {
+module.exports = function (mongoose, Schema) {
 
-    var categorySchema = new Schema({
-        uuid: String,
-        name: String,
-        breadcrumb: String,
-        parentBreadcrumB: String
-    }, {
-        collection: 'categories'
+    var userSchema = new Schema({
+        username: {type: String, required: true, index: {unique: true}},
+        password: {type: String, required: true},
+        salt: {type: String, required: true},
+        token: String
     });
 
-    return mongoose.model('category', categorySchema);
+    return mongoose.model('User', userSchema);
 };

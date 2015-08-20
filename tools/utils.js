@@ -1,6 +1,18 @@
 /**
  * Created by danielgallegos on 8/19/15.
  */
+var crypto = require('crypto');
+
+exports.hash = function(str) {
+    return crypto.createHash('sha256').update(str).digest("hex");
+};
+
+
+exports.randomString = function() {
+    return crypto.randomBytes(32).toString('hex');
+};
+
+
 exports.sendError = function(errCode, errMsg, res) {
     var error = {
         code: errCode,
