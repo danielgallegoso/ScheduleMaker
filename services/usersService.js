@@ -4,20 +4,19 @@
 var usersDao = require('../daos/usersDao');
 var utils = require('../tools/utils');
 
-exports.login = function(request, callback) {
+
+exports.login = function (request, callback) {
     var user = {
         username: request.query.username,
         password: request.query.password
     };
 
     usersDao.login(user, callback);
-
 };
 
 
-exports.createUser = function(request, callback) {
+exports.createUser = function (request, callback) {
     var salt = utils.randomString();
-    console.log(request.query.password + salt);
     var user = {
         username: request.query.username,
         password: utils.hash(request.query.password + salt),
@@ -25,6 +24,12 @@ exports.createUser = function(request, callback) {
         salt: salt
     };
 
-    usersDao.createUser(user, callback);
+    usersDao.createUser(user, function (error, data) {
+        if (error) {
+            callback(error, null);
+            return;
+        }
 
+        callback(null, data.token);
+    });
 };
