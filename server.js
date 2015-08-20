@@ -8,7 +8,6 @@ var utils = require('./tools/utils');
 var angularRoute = require('./routes/angularRoute');
 //var productsRoute = require('./routes/productsRoute');
 
-
 var app = express();
 
 LodashTemplates(app, 'html');

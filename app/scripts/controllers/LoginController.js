@@ -12,7 +12,7 @@ angular.module('LoginController', ['ngCookies'])
         this.login = function () {
         //    TODO
             _this.user = _this.username;
-            $rootScope.session = _this.username
+            $cookies.put('token', _this.username);
         };
 
         this.createAccount = function () {
@@ -20,7 +20,7 @@ angular.module('LoginController', ['ngCookies'])
         };
 
         this.logout = function () {
-            $rootScope.session = null;
+            $cookies.remove('token');
             _this.user = null;
             _this.username = '';
             _this.password = '';
