@@ -7,6 +7,10 @@ angular.module('RequestService', [])
             return $http.get($location.protocol() + '://' + $location.host() + ':' + $location.port() + '/v1/users/login', {params: params});
         };
 
+        this.authenticateToken = function (params) {
+            return $http.get($location.protocol() + '://' + $location.host() + ':' + $location.port() + '/v1/users/authenticate', {params: params});
+        };
+
         this.createUser = function (params) {
             return $http.get($location.protocol() + '://' + $location.host() + ':' + $location.port() + '/v1/users/create', {params: params});
         };

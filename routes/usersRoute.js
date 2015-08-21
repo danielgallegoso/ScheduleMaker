@@ -35,5 +35,18 @@ exports.getRoutes = function () {
         });
     });
 
+    router.get('/authenticate', function (request, response) {
+        console.log('[', new Date(), ']\t', request.method, request.baseUrl + request.path);
+
+        usersService.authenticateToken(request, function (error, data) {
+            if (error) {
+                utils.sendError(500, 'Unable to create profile. Username taken.', response);
+                return;
+            }
+
+            response.send(data);
+        });
+    });
+
     return router;
 };

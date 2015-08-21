@@ -5,6 +5,18 @@ angular.module('LoginController', ['RequestService', 'ngCookies'])
     .controller('LoginController', ['RequestService', '$cookies', function (RequestService, $cookies) {
         var _this = this;
         this.isSigningUp = false;
+
+        if ($cookies.get('token')) {
+            RequestService
+                .authenticateToken({token: $cookies.get('token')})
+                .success(function (response) {
+                    _this.user = response.username;
+                }).error(function (error) {
+
+                });
+        }
+
+
         this.signUp = function () {
             _this.isSigningUp = true;
         };
@@ -18,8 +30,8 @@ angular.module('LoginController', ['RequestService', 'ngCookies'])
                 .login(params)
                 .success(function (response) {
                     _this.user = _this.username;
-                    $cookies.put('token', response);
-                }).error(function(error) {
+                    $cookies.put('token', response.token);
+                }).error(function (error) {
 
                 });
         };
@@ -33,8 +45,8 @@ angular.module('LoginController', ['RequestService', 'ngCookies'])
                 .createUser(params)
                 .success(function (response) {
                     _this.user = _this.username;
-                    $cookies.put('token', response);
-                }).error(function(error) {
+                    $cookies.put('token', response.token);
+                }).error(function (error) {
 
                 });
         };

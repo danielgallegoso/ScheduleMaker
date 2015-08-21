@@ -68,7 +68,7 @@ angular.module('ScheduleManagementService', ['EmployeeFactory', 'ShiftFactory'])
 
 
         this.generateSchedule = function() {
-
+            _thi
         };
 
 

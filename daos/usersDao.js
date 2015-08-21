@@ -16,8 +16,8 @@ exports.login = function (params, callback) {
         var token = utils.randomString();
         params.password = utils.hash(params.password + data.salt);
 
-        User.findOneAndUpdate(params, {$set: {token: token}}).select('token').exec(function (error, data) {
-            if (error || !data) {
+        User.findOneAndUpdate(params, {$set: {token: token}}).select('token').exec(function (error, user) {
+            if (error || !user) {
                 callback(true, null);
                 return;
             }
@@ -30,4 +30,16 @@ exports.login = function (params, callback) {
 
 exports.createUser = function (params, callback) {
     User(params).save(callback);
+};
+
+
+exports.authenticateToken = function (token, callback) {
+    User.findOne({token: token}).select('username').exec(function (error, user) {
+        if (error || !user) {
+            callback(true, null);
+            return;
+        }
+
+        callback(null, user);
+    });
 };

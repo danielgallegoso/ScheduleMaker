@@ -11,7 +11,14 @@ exports.login = function (request, callback) {
         password: request.query.password
     };
 
-    usersDao.login(user, callback);
+    usersDao.login(user, function (error, data) {
+        if (error) {
+            callback(error, null);
+            return;
+        }
+
+        callback(null, {token: data});
+    });
 };
 
 
@@ -30,6 +37,18 @@ exports.createUser = function (request, callback) {
             return;
         }
 
-        callback(null, data.token);
+        callback(null, {token: data.token});
+    });
+};
+
+
+exports.authenticateToken = function (request, callback) {
+    usersDao.authenticateToken(request.query.token, function (error, data) {
+        if (error) {
+            callback(error, null);
+            return;
+        }
+
+        callback(null, {username: data.username});
     });
 };

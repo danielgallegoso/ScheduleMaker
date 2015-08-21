@@ -7,7 +7,7 @@ module.exports = function (mongoose, Schema) {
         username: {type: String, required: true, index: {unique: true}},
         password: {type: String, required: true},
         salt: {type: String, required: true},
-        token: String
+        token: {type: String, index: {unique: true}}
     });
 
     return mongoose.model('User', userSchema);
