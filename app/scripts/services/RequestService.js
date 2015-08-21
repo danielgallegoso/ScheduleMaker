@@ -14,4 +14,8 @@ angular.module('RequestService', [])
         this.createUser = function (params) {
             return $http.get($location.protocol() + '://' + $location.host() + ':' + $location.port() + '/v1/users/create', {params: params});
         };
+
+        this.getEmployeeUrl = function (params) {
+            return $http.get($location.protocol() + '://' + $location.host() + ':' + $location.port() + '/v1/users/generate-access', {params: params});
+        };
     }]);

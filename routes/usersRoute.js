@@ -40,7 +40,20 @@ exports.getRoutes = function () {
 
         usersService.authenticateToken(request, function (error, data) {
             if (error) {
-                utils.sendError(500, 'Unable to create profile. Username taken.', response);
+                utils.sendError(500, 'Unable to authenticate user with cookie.', response);
+                return;
+            }
+
+            response.send(data);
+        });
+    });
+
+    router.get('/generate-access', function (request, response) {
+        console.log('[', new Date(), ']\t', request.method, request.baseUrl + request.path);
+
+        usersService.generateEmployeeAccess(request, function (error, data) {
+            if (error) {
+                utils.sendError(500, 'Unable to create access key. Possible corrupted authentication token.', response);
                 return;
             }
 

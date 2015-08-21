@@ -43,3 +43,16 @@ exports.authenticateToken = function (token, callback) {
         callback(null, user);
     });
 };
+
+exports.generateEmployeeAccess = function (token, callback) {
+    var key = utils.randomString();
+
+    User.findOneAndUpdate({token: token}, {$set: {accessKey: key}}).select('accessKey').exec(function (error, user) {
+        if (error || !user) {
+            callback(true, null);
+            return;
+        }
+
+        callback(null, key);
+    });
+};

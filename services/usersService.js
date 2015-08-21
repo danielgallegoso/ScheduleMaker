@@ -52,3 +52,14 @@ exports.authenticateToken = function (request, callback) {
         callback(null, {username: data.username});
     });
 };
+
+exports.generateEmployeeAccess = function (request, callback) {
+    usersDao.generateEmployeeAccess(request.query.token, function (error, data) {
+        if (error) {
+            callback(error, null);
+            return;
+        }
+
+        callback(null, {accessKey: data});
+    });
+};
