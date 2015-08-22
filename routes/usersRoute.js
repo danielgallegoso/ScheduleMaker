@@ -37,7 +37,8 @@ exports.getRoutes = function () {
 
     router.get('/authenticate', function (request, response) {
         console.log('[', new Date(), ']\t', request.method, request.baseUrl + request.path);
-
+        //console.log(request.connection.remoteAddress);
+        //console.log(request.headers['x-forwarded-for']);
         usersService.authenticateToken(request, function (error, data) {
             if (error) {
                 utils.sendError(500, 'Unable to authenticate user with cookie.', response);

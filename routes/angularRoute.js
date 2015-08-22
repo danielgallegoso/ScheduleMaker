@@ -3,11 +3,15 @@
  */
 var express = require('express');
 
-exports.getRoutes = function() {
+exports.getRoutes = function () {
     var router = express.Router();
 
-    router.get('/', function(req, res) {
-        return res.render('index');
+    router.get('/employee', function (request, response) {
+        response.render('employeePreference');
+    });
+
+    router.get('/', function (request, response) {
+        return response.render('index');
     });
 
     return router;

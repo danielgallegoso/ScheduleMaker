@@ -4,7 +4,6 @@
 angular.module('ShiftFactory', [])
     .factory('ShiftFactory', [function () {
         function Shift(startTime, endTime, targetEmployees) {
-            var _this = this;
             this.startTime = startTime;
             this.endTime = endTime;
             this.targetEmployees = targetEmployees;
@@ -12,21 +11,48 @@ angular.module('ShiftFactory', [])
             this.employees = [];
             this.conflicts = [];
 
-            Shift.prototype.addEmployee = function (employee) {
-                _this.employees.push(employee);
+            Shift.prototype.assignEmployee = function (employee) {
+                this.employees.push(employee);
+                this.removePossibleEmployee(employee);
+            };
+
+            Shift.prototype.removePossibleEmployee = function(employee) {
+                var index = this.possibleEmployees.indexOf(employee);
+                if (index === -1) return;
+                this.possibleEmployees.splice(index, 1);
             };
 
             Shift.prototype.priority = function () {
-                return (_this.targetEmployees - _this.employees.length) / (_this.possibleEmployees.length + 1)
+                return (this.targetEmployees - this.employees.length) / (this.possibleEmployees.length + 1)
             };
 
             Shift.prototype.addConflict = function (shift) {
-                _this.conflicts.push(shift);
+                this.conflicts.push(shift);
             };
 
             Shift.prototype.getHours = function () {
-                return _this.endTime.getHours() - _this.startTime.getHours()
-                    + (_this.endTime.getMinutes() - _this.startTime.getMinutes()) / 60;
+                return this.endTime.getHours() - this.startTime.getHours()
+                    + (this.endTime.getMinutes() - this.startTime.getMinutes()) / 60;
+            };
+
+            Shift.isConflicting = function (arg1, arg2) {
+                if (arg1.startTime.getTime() >= arg2.startTime.getTime()) {
+                    if (arg1.startTime.getTime() >= arg2.endTime.getTime()) {
+                        return false;
+                    }
+                } else {
+                    if (arg1.endTime.getTime() <= arg2.startTime.getTime()) {
+                        return false;
+                    }
+                }
+                return true;
+            };
+
+
+            Shift.compareShifts = function (arg1, arg2) {
+                var x = arg1.start.getTime() - arg2.start.getTime();
+                if (x !== 0) return x;
+                return arg1.end.getTime() - arg2.end.getTime();
             };
         }
 

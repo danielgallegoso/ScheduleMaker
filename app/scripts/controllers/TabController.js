@@ -9,19 +9,15 @@ angular.module('TabController', [])
         this.tabs = [
             {
                 title: 'Specify Shifts',
-                url: 'views/shifts.html'
+                url: 'views/main/shifts.html'
             },
             {
                 title: 'Employee Preferences',
-                url: 'views/employee.html'
+                url: 'views/main/employee.html'
             },
-            //{
-            //    title: 'Manager Preferences',
-            //    url: 'views/manager.html'
-            //},
             {
                 title: 'Generate Schedule',
-                url: 'views/schedule.html'
+                url: 'views/main/schedule.html'
             }
         ];
 

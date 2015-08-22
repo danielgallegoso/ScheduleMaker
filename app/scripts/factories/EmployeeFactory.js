@@ -4,14 +4,16 @@
 angular.module('EmployeeFactory', [])
     .factory('EmployeeFactory', [function () {
         function Employee(name, targetHours) {
-            var _this = this;
-
             this.name = name;
             this.targetHours = targetHours;
             this.hours = 0;
 
-            Employee.prototype.getPriority = function () {
-                return _this.targetHours / (_this.hours + 1);
+            Employee.prototype.priority = function () {
+                return this.targetHours / (this.hours + 1);
+            };
+
+            Employee.prototype.assignShift = function (shift) {
+                this.hours += shift.getHours();
             };
         }
 

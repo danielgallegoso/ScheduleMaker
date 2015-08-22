@@ -7,6 +7,8 @@ var LodashTemplates = require('lodash-express');
 var utils = require('./tools/utils');
 var angularRoute = require('./routes/angularRoute');
 var usersRoute = require('./routes/usersRoute');
+var shiftsRoute = require('./routes/shiftsRoute');
+var employeesRoute = require('./routes/employeesRoute');
 
 
 var app = express();
@@ -21,6 +23,8 @@ app.use(bodyParser.json());
 
 
 app.use('/v1/users', usersRoute.getRoutes());
+app.use('/v1/shifts', shiftsRoute.getRoutes());
+app.use('/v1/employees', employeesRoute.getRoutes());
 app.use('/', angularRoute.getRoutes());
 app.use(function(request, response) {
     utils.sendError(404, '[Error] Whoops, the page you\'re looking for doesn\'t exist! :\'( ', response);

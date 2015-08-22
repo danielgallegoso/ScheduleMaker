@@ -38,7 +38,7 @@ angular.module('ScheduleManagementService', ['EmployeeFactory', 'ShiftFactory'])
                 formattedShift.days = JSON.parse(JSON.stringify(shift.days));
                 result.push(formattedShift);
             });
-            result.sort(_this.compareShifts);
+            result.sort(ShiftFactory.compareShifts);
             return result;
         };
 
@@ -62,46 +62,65 @@ angular.module('ScheduleManagementService', ['EmployeeFactory', 'ShiftFactory'])
                     }
                 });
             }
-            _this.generateSchedule();
-            return _this.shifts;
+            _this.flagConflicts();
+            return _this.generateSchedule();
         };
 
 
-        this.generateSchedule = function() {
-            _thi
-        };
-
-
-        this.findConflicts = function () {
-
-        };
-
-        this.findTopShift = function() {
-
-        };
-
-        this.findTopEmployee = function(shift) {
-
-        };
-
-
-        this.isConflicting = function (arg1, arg2) {
-            if (arg1.startTime.getTime() >= arg2.startTime.getTime()) {
-                if (arg1.startTime.getTime() >= arg2.endTime.getTime()) {
-                    return false;
-                }
-            } else {
-                if (arg1.endTime.getTime() <= arg2.startTime.getTime()) {
-                    return false;
-                }
+        this.generateSchedule = function () {
+            while (true) {
+                var topShift = this.findTopShift();
+                if (!topShift) return _this.shifts;
+                var topEmployee = this.findTopEmployee(topShift);
+                if (!topEmployee) return null;
+                topShift.assignEmployee(topEmployee);
+                topEmployee.assignShift(topShift);
+                topShift.conflicts.forEach(function (shift) {
+                    shift.removePossibleEmployee(topEmployee);
+                });
             }
-            return true;
         };
 
 
-        this.compareShifts = function (arg1, arg2) {
-            var x = arg1.start.getTime() - arg2.start.getTime();
-            if (x !== 0) return x;
-            return arg1.end.getTime() - arg2.end.getTime();
+        this.flagConflicts = function () {
+            Object.keys(_this.shifts).forEach(function (day) {
+                var shifts = _this.shifts[day];
+                for (var i = 0; i < shifts.length; i++) {
+                    for (var j = i + 1; j < shifts.length; j++) {
+                        if (shifts[i] && shifts[j] && ShiftFactory.isConflicting(shifts[i], shifts[j])) {
+                            shifts[i].addConflict(shifts[j]);
+                            shifts[j].addConflict(shifts[i]);
+                        }
+                    }
+                }
+            });
+        };
+
+        this.findTopShift = function () {
+            var preference = 0;
+            var topShift = null;
+            Object.keys(_this.shifts).forEach(function (day) {
+                _this.shifts[day].forEach(function (shift) {
+                    if (shift) {
+                        if (shift.priority() > preference) {
+                            preference = shift.priority();
+                            topShift = shift;
+                        }
+                    }
+                });
+            });
+            return topShift;
+        };
+
+        this.findTopEmployee = function (shift) {
+            var preference = 0;
+            var topEmployee = null;
+            shift.possibleEmployees.forEach(function (employee) {
+                if (employee.priority() > preference) {
+                    preference = employee.priority();
+                    topEmployee = employee;
+                }
+            });
+            return topEmployee;
         };
     }]);

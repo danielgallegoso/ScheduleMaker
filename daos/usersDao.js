@@ -56,3 +56,14 @@ exports.generateEmployeeAccess = function (token, callback) {
         callback(null, key);
     });
 };
+
+exports.getId = function (query, callback) {
+    User.findOne(query).select('id').exec(function (error, user) {
+        if (error || !user) {
+            callback(true, null);
+            return;
+        }
+
+        callback(null, user);
+    });
+};

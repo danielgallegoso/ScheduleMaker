@@ -26,6 +26,8 @@
             </table>
         </div>
     </div>
+    <a ng-href={{schedule.link}} ng-show="schedule.link">{{schedule.link}}</a>
     <button class="btn btn-default" ng-click="schedule.addEmployee()">Add Employee</button>
+    <button class="btn btn-default" ng-click="schedule.generateLink()">Generate Employee Link</button>
     <button class="btn btn-default" ng-click="tabs.clickTab(tabs.tabs[2]); schedule.submitEmployeePreferences()">Next</button>
 </form>

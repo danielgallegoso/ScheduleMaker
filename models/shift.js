@@ -3,14 +3,10 @@
  */
 module.exports = function(mongoose, Schema) {
 
-    var categorySchema = new Schema({
-        uuid: String,
-        name: String,
-        breadcrumb: String,
-        parentBreadcrumB: String
-    }, {
-        collection: 'categories'
+    var shiftSchema = new Schema({
+        userId: {type: ObjectId, required: true},
+        shifts: {type: Array, required: true}
     });
 
-    return mongoose.model('category', categorySchema);
+    return mongoose.model('Shift', shiftSchema);
 };

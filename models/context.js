@@ -23,5 +23,7 @@ connect();
 
 
 module.exports = {
-    User: UserModel
+    User: UserModel,
+    Employee: EmployeeModel,
+    Shift: ShiftModel
 };

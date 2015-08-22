@@ -3,14 +3,12 @@
  */
 module.exports = function(mongoose, Schema) {
 
-    var categorySchema = new Schema({
-        uuid: String,
-        name: String,
-        breadcrumb: String,
-        parentBreadcrumB: String
-    }, {
-        collection: 'categories'
+    var employeeSchema = new Schema({
+        userId: {type: ObjectId, required: true},
+        name: {type: String, required: true},
+        targetHours: {type: Number, required: true},
+        availability: {type: Array, required: true}
     });
 
-    return mongoose.model('category', categorySchema);
+    return mongoose.model('Employee', employeeSchema);
 };

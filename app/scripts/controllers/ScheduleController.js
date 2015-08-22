@@ -1,8 +1,8 @@
 /**
  * Created by danielgallegos on 7/26/15.
  */
-angular.module('ScheduleController', ['ScheduleManagementService'])
-    .controller('ScheduleController', ['ScheduleManagementService', function (ScheduleManagementService) {
+angular.module('ScheduleController', ['ScheduleManagementService', 'RequestService', 'ngCookies'])
+    .controller('ScheduleController', ['ScheduleManagementService', 'RequestService', '$cookies', function (ScheduleManagementService, RequestService, $cookies) {
         var _this = this;
         this.formShifts = [];
         this.employeePreferences = [];
@@ -36,9 +36,18 @@ angular.module('ScheduleController', ['ScheduleManagementService'])
         };
 
         this.submitEmployeePreferences = function () {
-            this.schedule = ScheduleManagementService.submitPreferences(_this.formattedShifts, _this.employeePreferences);
+            _this.schedule = ScheduleManagementService.submitPreferences(_this.formattedShifts, _this.employeePreferences);
         };
 
+        this.generateLink = function() {
+            RequestService
+                .getEmployeeUrl({token: $cookies.get('token')})
+                .success(function (response) {
+                    _this.link = RequestService.baseUrl() + '/employee?accessKey=' + response.accessKey;
+                }).error(function (response) {
+
+                });
+        };
 
         // Init
 

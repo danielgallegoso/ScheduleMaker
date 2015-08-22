@@ -14,7 +14,7 @@
             <p ng-show="login.user" class="navbar-text pull-right">Hello {{login.user}}! </p>
         </div>
     </nav>
-    <div ng-include="'views/login.html'" ng-show="!login.user"></div>
+    <div ng-include="'views/main/login.html'" ng-show="!login.user"></div>
     <div ng-controller="TabController as tabs" ng-show="login.user">
         <ul class="nav nav-tabs nav-justified">
             <li role="presentation" ng-repeat="tab in tabs.tabs" ng-class="{active: tabs.isActive(tab)}"
