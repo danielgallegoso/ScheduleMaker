@@ -10,7 +10,7 @@
   "author": "Daniel Gallegos",
   "license": "ISC",
   "dependencies": {
-    "bcrypt": "^0.8.5",
+    "bcrypt": "^5.0.0",
     "body-parser": "^1.13.3",
     "express": "4.13.1",
     "http": "0.0.0",
